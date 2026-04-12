@@ -1,0 +1,80 @@
+"use strict";
+/**
+ * Zod schemas for Davoxi agent creation and update.
+ *
+ * All numeric limits come from `./constants` so there is exactly one
+ * place to update when the backend changes.
+ */
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.updateAgentSchema = exports.createAgentSchema = exports.toolDefinitionSchema = void 0;
+const zod_1 = require("zod");
+const constants_1 = require("./constants");
+// ── Tool definition ─────────────────────────────────────────────────── //
+exports.toolDefinitionSchema = zod_1.z.object({
+    name: zod_1.z
+        .string()
+        .min(1, "Tool name is required")
+        .max(constants_1.TOOL_LIMITS.NAME_MAX, `Tool name must be at most ${constants_1.TOOL_LIMITS.NAME_MAX} characters`),
+    description: zod_1.z
+        .string()
+        .min(1, "Tool description is required")
+        .max(constants_1.TOOL_LIMITS.DESCRIPTION_MAX, `Tool description must be at most ${constants_1.TOOL_LIMITS.DESCRIPTION_MAX} characters`),
+    parameters: zod_1.z.record(zod_1.z.unknown()).describe("JSON Schema describing the tool's parameters."),
+    endpoint: zod_1.z.string().url("Tool endpoint must be a valid URL").optional(),
+    auth_ssm_path: zod_1.z
+        .string()
+        .min(1)
+        .max(constants_1.TOOL_LIMITS.SSM_PATH_MAX, `SSM path must be at most ${constants_1.TOOL_LIMITS.SSM_PATH_MAX} characters`)
+        .optional(),
+    requires_confirmation: zod_1.z.boolean().optional(),
+});
+// ── Create agent ────────────────────────────────────────────────────── //
+exports.createAgentSchema = zod_1.z.object({
+    description: zod_1.z
+        .string()
+        .min(1, "Description is required")
+        .max(constants_1.AGENT_LIMITS.DESCRIPTION_MAX, `Description must be at most ${constants_1.AGENT_LIMITS.DESCRIPTION_MAX} characters`),
+    system_prompt: zod_1.z
+        .string()
+        .min(1, "System prompt is required")
+        .max(constants_1.AGENT_LIMITS.SYSTEM_PROMPT_MAX, `System prompt must be at most ${constants_1.AGENT_LIMITS.SYSTEM_PROMPT_MAX} characters`),
+    tools: zod_1.z.array(exports.toolDefinitionSchema).optional(),
+    knowledge_sources: zod_1.z
+        .array(zod_1.z.string().url("Knowledge source must be a valid URL"))
+        .max(constants_1.AGENT_LIMITS.KNOWLEDGE_SOURCES_MAX, `At most ${constants_1.AGENT_LIMITS.KNOWLEDGE_SOURCES_MAX} knowledge sources allowed`)
+        .optional(),
+    trigger_tags: zod_1.z
+        .array(zod_1.z
+        .string()
+        .min(1, "Trigger tag must not be empty")
+        .max(constants_1.AGENT_LIMITS.TRIGGER_TAG_LENGTH_MAX, `Each trigger tag must be at most ${constants_1.AGENT_LIMITS.TRIGGER_TAG_LENGTH_MAX} characters`))
+        .max(constants_1.AGENT_LIMITS.TRIGGER_TAGS_MAX, `At most ${constants_1.AGENT_LIMITS.TRIGGER_TAGS_MAX} trigger tags allowed`)
+        .optional(),
+    enabled: zod_1.z.boolean().optional(),
+});
+// ── Update agent (all fields optional) ──────────────────────────────── //
+exports.updateAgentSchema = zod_1.z.object({
+    description: zod_1.z
+        .string()
+        .min(1, "Description must not be empty")
+        .max(constants_1.AGENT_LIMITS.DESCRIPTION_MAX, `Description must be at most ${constants_1.AGENT_LIMITS.DESCRIPTION_MAX} characters`)
+        .optional(),
+    system_prompt: zod_1.z
+        .string()
+        .min(1, "System prompt must not be empty")
+        .max(constants_1.AGENT_LIMITS.SYSTEM_PROMPT_MAX, `System prompt must be at most ${constants_1.AGENT_LIMITS.SYSTEM_PROMPT_MAX} characters`)
+        .optional(),
+    tools: zod_1.z.array(exports.toolDefinitionSchema).optional(),
+    knowledge_sources: zod_1.z
+        .array(zod_1.z.string().url("Knowledge source must be a valid URL"))
+        .max(constants_1.AGENT_LIMITS.KNOWLEDGE_SOURCES_MAX, `At most ${constants_1.AGENT_LIMITS.KNOWLEDGE_SOURCES_MAX} knowledge sources allowed`)
+        .optional(),
+    trigger_tags: zod_1.z
+        .array(zod_1.z
+        .string()
+        .min(1, "Trigger tag must not be empty")
+        .max(constants_1.AGENT_LIMITS.TRIGGER_TAG_LENGTH_MAX, `Each trigger tag must be at most ${constants_1.AGENT_LIMITS.TRIGGER_TAG_LENGTH_MAX} characters`))
+        .max(constants_1.AGENT_LIMITS.TRIGGER_TAGS_MAX, `At most ${constants_1.AGENT_LIMITS.TRIGGER_TAGS_MAX} trigger tags allowed`)
+        .optional(),
+    enabled: zod_1.z.boolean().optional(),
+});
