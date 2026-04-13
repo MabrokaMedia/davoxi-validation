@@ -6,7 +6,7 @@
  * place to update when the backend changes.
  */
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.updateAgentSchema = exports.createAgentSchema = exports.toolDefinitionSchema = void 0;
+exports.updateAgentSchema = exports.createAgentSchema = exports.agentPermissionsSchema = exports.toolDefinitionSchema = void 0;
 const zod_1 = require("zod");
 const constants_1 = require("./constants");
 // ── Tool definition ─────────────────────────────────────────────────── //
@@ -27,6 +27,31 @@ exports.toolDefinitionSchema = zod_1.z.object({
         .max(constants_1.TOOL_LIMITS.SSM_PATH_MAX, `SSM path must be at most ${constants_1.TOOL_LIMITS.SSM_PATH_MAX} characters`)
         .optional(),
     requires_confirmation: zod_1.z.boolean().optional(),
+});
+// ── Agent permissions ──────────────────────────────────────────────── //
+const readWritePermSchema = zod_1.z.object({
+    read: zod_1.z.boolean(),
+    write: zod_1.z.boolean(),
+});
+exports.agentPermissionsSchema = zod_1.z.object({
+    tool_access: zod_1.z.object({
+        mode: zod_1.z.enum(["allow_all", "allow_list", "deny_list"]),
+        tools: zod_1.z.array(zod_1.z.string()).optional().default([]),
+    }).optional(),
+    memory: zod_1.z.object({
+        session: readWritePermSchema.optional(),
+        caller: readWritePermSchema.optional(),
+        business: readWritePermSchema.optional(),
+        kind: readWritePermSchema.optional(),
+        global: readWritePermSchema.optional(),
+    }).optional(),
+    pii_policy: zod_1.z.enum(["allow", "redact", "forbid"]).optional(),
+    budget: zod_1.z.object({
+        tokens_per_turn: zod_1.z.number().int().min(1).max(1000000).optional(),
+        tool_calls: zod_1.z.number().int().min(1).max(1000).optional(),
+        wall_clock_ms: zod_1.z.number().int().min(1000).max(300000).optional(),
+    }).optional(),
+    cross_org: zod_1.z.enum(["in_org_only", "allow"]).optional(),
 });
 // ── Create agent ────────────────────────────────────────────────────── //
 exports.createAgentSchema = zod_1.z.object({
@@ -51,6 +76,7 @@ exports.createAgentSchema = zod_1.z.object({
         .max(constants_1.AGENT_LIMITS.TRIGGER_TAGS_MAX, `At most ${constants_1.AGENT_LIMITS.TRIGGER_TAGS_MAX} trigger tags allowed`)
         .optional(),
     enabled: zod_1.z.boolean().optional(),
+    permissions: exports.agentPermissionsSchema.optional(),
 });
 // ── Update agent (all fields optional) ──────────────────────────────── //
 exports.updateAgentSchema = zod_1.z.object({
@@ -77,4 +103,5 @@ exports.updateAgentSchema = zod_1.z.object({
         .max(constants_1.AGENT_LIMITS.TRIGGER_TAGS_MAX, `At most ${constants_1.AGENT_LIMITS.TRIGGER_TAGS_MAX} trigger tags allowed`)
         .optional(),
     enabled: zod_1.z.boolean().optional(),
+    permissions: exports.agentPermissionsSchema.optional().nullable(),
 });

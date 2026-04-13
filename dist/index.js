@@ -1,12 +1,13 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.validateAgentTools = exports.validateToolSsmPath = exports.validateToolEndpoint = exports.updateAgentSchema = exports.createAgentSchema = exports.toolDefinitionSchema = exports.BLOCKED_HOSTNAMES = exports.TOOL_LIMITS = exports.AGENT_LIMITS = void 0;
+exports.validateAgentTools = exports.validateToolSsmPath = exports.validateToolEndpoint = exports.updateAgentSchema = exports.createAgentSchema = exports.agentPermissionsSchema = exports.toolDefinitionSchema = exports.BLOCKED_HOSTNAMES = exports.TOOL_LIMITS = exports.AGENT_LIMITS = void 0;
 var constants_1 = require("./constants");
 Object.defineProperty(exports, "AGENT_LIMITS", { enumerable: true, get: function () { return constants_1.AGENT_LIMITS; } });
 Object.defineProperty(exports, "TOOL_LIMITS", { enumerable: true, get: function () { return constants_1.TOOL_LIMITS; } });
 Object.defineProperty(exports, "BLOCKED_HOSTNAMES", { enumerable: true, get: function () { return constants_1.BLOCKED_HOSTNAMES; } });
 var schemas_1 = require("./schemas");
 Object.defineProperty(exports, "toolDefinitionSchema", { enumerable: true, get: function () { return schemas_1.toolDefinitionSchema; } });
+Object.defineProperty(exports, "agentPermissionsSchema", { enumerable: true, get: function () { return schemas_1.agentPermissionsSchema; } });
 Object.defineProperty(exports, "createAgentSchema", { enumerable: true, get: function () { return schemas_1.createAgentSchema; } });
 Object.defineProperty(exports, "updateAgentSchema", { enumerable: true, get: function () { return schemas_1.updateAgentSchema; } });
 var validators_1 = require("./validators");

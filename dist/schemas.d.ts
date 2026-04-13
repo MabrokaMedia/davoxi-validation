@@ -28,6 +28,196 @@ export declare const toolDefinitionSchema: z.ZodObject<{
     requires_confirmation?: boolean | undefined;
 }>;
 export type ToolDefinitionInput = z.infer<typeof toolDefinitionSchema>;
+export declare const agentPermissionsSchema: z.ZodObject<{
+    tool_access: z.ZodOptional<z.ZodObject<{
+        mode: z.ZodEnum<["allow_all", "allow_list", "deny_list"]>;
+        tools: z.ZodDefault<z.ZodOptional<z.ZodArray<z.ZodString, "many">>>;
+    }, "strip", z.ZodTypeAny, {
+        mode: "allow_all" | "allow_list" | "deny_list";
+        tools: string[];
+    }, {
+        mode: "allow_all" | "allow_list" | "deny_list";
+        tools?: string[] | undefined;
+    }>>;
+    memory: z.ZodOptional<z.ZodObject<{
+        session: z.ZodOptional<z.ZodObject<{
+            read: z.ZodBoolean;
+            write: z.ZodBoolean;
+        }, "strip", z.ZodTypeAny, {
+            read: boolean;
+            write: boolean;
+        }, {
+            read: boolean;
+            write: boolean;
+        }>>;
+        caller: z.ZodOptional<z.ZodObject<{
+            read: z.ZodBoolean;
+            write: z.ZodBoolean;
+        }, "strip", z.ZodTypeAny, {
+            read: boolean;
+            write: boolean;
+        }, {
+            read: boolean;
+            write: boolean;
+        }>>;
+        business: z.ZodOptional<z.ZodObject<{
+            read: z.ZodBoolean;
+            write: z.ZodBoolean;
+        }, "strip", z.ZodTypeAny, {
+            read: boolean;
+            write: boolean;
+        }, {
+            read: boolean;
+            write: boolean;
+        }>>;
+        kind: z.ZodOptional<z.ZodObject<{
+            read: z.ZodBoolean;
+            write: z.ZodBoolean;
+        }, "strip", z.ZodTypeAny, {
+            read: boolean;
+            write: boolean;
+        }, {
+            read: boolean;
+            write: boolean;
+        }>>;
+        global: z.ZodOptional<z.ZodObject<{
+            read: z.ZodBoolean;
+            write: z.ZodBoolean;
+        }, "strip", z.ZodTypeAny, {
+            read: boolean;
+            write: boolean;
+        }, {
+            read: boolean;
+            write: boolean;
+        }>>;
+    }, "strip", z.ZodTypeAny, {
+        session?: {
+            read: boolean;
+            write: boolean;
+        } | undefined;
+        caller?: {
+            read: boolean;
+            write: boolean;
+        } | undefined;
+        business?: {
+            read: boolean;
+            write: boolean;
+        } | undefined;
+        kind?: {
+            read: boolean;
+            write: boolean;
+        } | undefined;
+        global?: {
+            read: boolean;
+            write: boolean;
+        } | undefined;
+    }, {
+        session?: {
+            read: boolean;
+            write: boolean;
+        } | undefined;
+        caller?: {
+            read: boolean;
+            write: boolean;
+        } | undefined;
+        business?: {
+            read: boolean;
+            write: boolean;
+        } | undefined;
+        kind?: {
+            read: boolean;
+            write: boolean;
+        } | undefined;
+        global?: {
+            read: boolean;
+            write: boolean;
+        } | undefined;
+    }>>;
+    pii_policy: z.ZodOptional<z.ZodEnum<["allow", "redact", "forbid"]>>;
+    budget: z.ZodOptional<z.ZodObject<{
+        tokens_per_turn: z.ZodOptional<z.ZodNumber>;
+        tool_calls: z.ZodOptional<z.ZodNumber>;
+        wall_clock_ms: z.ZodOptional<z.ZodNumber>;
+    }, "strip", z.ZodTypeAny, {
+        tokens_per_turn?: number | undefined;
+        tool_calls?: number | undefined;
+        wall_clock_ms?: number | undefined;
+    }, {
+        tokens_per_turn?: number | undefined;
+        tool_calls?: number | undefined;
+        wall_clock_ms?: number | undefined;
+    }>>;
+    cross_org: z.ZodOptional<z.ZodEnum<["in_org_only", "allow"]>>;
+}, "strip", z.ZodTypeAny, {
+    tool_access?: {
+        mode: "allow_all" | "allow_list" | "deny_list";
+        tools: string[];
+    } | undefined;
+    memory?: {
+        session?: {
+            read: boolean;
+            write: boolean;
+        } | undefined;
+        caller?: {
+            read: boolean;
+            write: boolean;
+        } | undefined;
+        business?: {
+            read: boolean;
+            write: boolean;
+        } | undefined;
+        kind?: {
+            read: boolean;
+            write: boolean;
+        } | undefined;
+        global?: {
+            read: boolean;
+            write: boolean;
+        } | undefined;
+    } | undefined;
+    pii_policy?: "allow" | "redact" | "forbid" | undefined;
+    budget?: {
+        tokens_per_turn?: number | undefined;
+        tool_calls?: number | undefined;
+        wall_clock_ms?: number | undefined;
+    } | undefined;
+    cross_org?: "allow" | "in_org_only" | undefined;
+}, {
+    tool_access?: {
+        mode: "allow_all" | "allow_list" | "deny_list";
+        tools?: string[] | undefined;
+    } | undefined;
+    memory?: {
+        session?: {
+            read: boolean;
+            write: boolean;
+        } | undefined;
+        caller?: {
+            read: boolean;
+            write: boolean;
+        } | undefined;
+        business?: {
+            read: boolean;
+            write: boolean;
+        } | undefined;
+        kind?: {
+            read: boolean;
+            write: boolean;
+        } | undefined;
+        global?: {
+            read: boolean;
+            write: boolean;
+        } | undefined;
+    } | undefined;
+    pii_policy?: "allow" | "redact" | "forbid" | undefined;
+    budget?: {
+        tokens_per_turn?: number | undefined;
+        tool_calls?: number | undefined;
+        wall_clock_ms?: number | undefined;
+    } | undefined;
+    cross_org?: "allow" | "in_org_only" | undefined;
+}>;
+export type AgentPermissionsInput = z.infer<typeof agentPermissionsSchema>;
 export declare const createAgentSchema: z.ZodObject<{
     description: z.ZodString;
     system_prompt: z.ZodString;
@@ -56,6 +246,195 @@ export declare const createAgentSchema: z.ZodObject<{
     knowledge_sources: z.ZodOptional<z.ZodArray<z.ZodString, "many">>;
     trigger_tags: z.ZodOptional<z.ZodArray<z.ZodString, "many">>;
     enabled: z.ZodOptional<z.ZodBoolean>;
+    permissions: z.ZodOptional<z.ZodObject<{
+        tool_access: z.ZodOptional<z.ZodObject<{
+            mode: z.ZodEnum<["allow_all", "allow_list", "deny_list"]>;
+            tools: z.ZodDefault<z.ZodOptional<z.ZodArray<z.ZodString, "many">>>;
+        }, "strip", z.ZodTypeAny, {
+            mode: "allow_all" | "allow_list" | "deny_list";
+            tools: string[];
+        }, {
+            mode: "allow_all" | "allow_list" | "deny_list";
+            tools?: string[] | undefined;
+        }>>;
+        memory: z.ZodOptional<z.ZodObject<{
+            session: z.ZodOptional<z.ZodObject<{
+                read: z.ZodBoolean;
+                write: z.ZodBoolean;
+            }, "strip", z.ZodTypeAny, {
+                read: boolean;
+                write: boolean;
+            }, {
+                read: boolean;
+                write: boolean;
+            }>>;
+            caller: z.ZodOptional<z.ZodObject<{
+                read: z.ZodBoolean;
+                write: z.ZodBoolean;
+            }, "strip", z.ZodTypeAny, {
+                read: boolean;
+                write: boolean;
+            }, {
+                read: boolean;
+                write: boolean;
+            }>>;
+            business: z.ZodOptional<z.ZodObject<{
+                read: z.ZodBoolean;
+                write: z.ZodBoolean;
+            }, "strip", z.ZodTypeAny, {
+                read: boolean;
+                write: boolean;
+            }, {
+                read: boolean;
+                write: boolean;
+            }>>;
+            kind: z.ZodOptional<z.ZodObject<{
+                read: z.ZodBoolean;
+                write: z.ZodBoolean;
+            }, "strip", z.ZodTypeAny, {
+                read: boolean;
+                write: boolean;
+            }, {
+                read: boolean;
+                write: boolean;
+            }>>;
+            global: z.ZodOptional<z.ZodObject<{
+                read: z.ZodBoolean;
+                write: z.ZodBoolean;
+            }, "strip", z.ZodTypeAny, {
+                read: boolean;
+                write: boolean;
+            }, {
+                read: boolean;
+                write: boolean;
+            }>>;
+        }, "strip", z.ZodTypeAny, {
+            session?: {
+                read: boolean;
+                write: boolean;
+            } | undefined;
+            caller?: {
+                read: boolean;
+                write: boolean;
+            } | undefined;
+            business?: {
+                read: boolean;
+                write: boolean;
+            } | undefined;
+            kind?: {
+                read: boolean;
+                write: boolean;
+            } | undefined;
+            global?: {
+                read: boolean;
+                write: boolean;
+            } | undefined;
+        }, {
+            session?: {
+                read: boolean;
+                write: boolean;
+            } | undefined;
+            caller?: {
+                read: boolean;
+                write: boolean;
+            } | undefined;
+            business?: {
+                read: boolean;
+                write: boolean;
+            } | undefined;
+            kind?: {
+                read: boolean;
+                write: boolean;
+            } | undefined;
+            global?: {
+                read: boolean;
+                write: boolean;
+            } | undefined;
+        }>>;
+        pii_policy: z.ZodOptional<z.ZodEnum<["allow", "redact", "forbid"]>>;
+        budget: z.ZodOptional<z.ZodObject<{
+            tokens_per_turn: z.ZodOptional<z.ZodNumber>;
+            tool_calls: z.ZodOptional<z.ZodNumber>;
+            wall_clock_ms: z.ZodOptional<z.ZodNumber>;
+        }, "strip", z.ZodTypeAny, {
+            tokens_per_turn?: number | undefined;
+            tool_calls?: number | undefined;
+            wall_clock_ms?: number | undefined;
+        }, {
+            tokens_per_turn?: number | undefined;
+            tool_calls?: number | undefined;
+            wall_clock_ms?: number | undefined;
+        }>>;
+        cross_org: z.ZodOptional<z.ZodEnum<["in_org_only", "allow"]>>;
+    }, "strip", z.ZodTypeAny, {
+        tool_access?: {
+            mode: "allow_all" | "allow_list" | "deny_list";
+            tools: string[];
+        } | undefined;
+        memory?: {
+            session?: {
+                read: boolean;
+                write: boolean;
+            } | undefined;
+            caller?: {
+                read: boolean;
+                write: boolean;
+            } | undefined;
+            business?: {
+                read: boolean;
+                write: boolean;
+            } | undefined;
+            kind?: {
+                read: boolean;
+                write: boolean;
+            } | undefined;
+            global?: {
+                read: boolean;
+                write: boolean;
+            } | undefined;
+        } | undefined;
+        pii_policy?: "allow" | "redact" | "forbid" | undefined;
+        budget?: {
+            tokens_per_turn?: number | undefined;
+            tool_calls?: number | undefined;
+            wall_clock_ms?: number | undefined;
+        } | undefined;
+        cross_org?: "allow" | "in_org_only" | undefined;
+    }, {
+        tool_access?: {
+            mode: "allow_all" | "allow_list" | "deny_list";
+            tools?: string[] | undefined;
+        } | undefined;
+        memory?: {
+            session?: {
+                read: boolean;
+                write: boolean;
+            } | undefined;
+            caller?: {
+                read: boolean;
+                write: boolean;
+            } | undefined;
+            business?: {
+                read: boolean;
+                write: boolean;
+            } | undefined;
+            kind?: {
+                read: boolean;
+                write: boolean;
+            } | undefined;
+            global?: {
+                read: boolean;
+                write: boolean;
+            } | undefined;
+        } | undefined;
+        pii_policy?: "allow" | "redact" | "forbid" | undefined;
+        budget?: {
+            tokens_per_turn?: number | undefined;
+            tool_calls?: number | undefined;
+            wall_clock_ms?: number | undefined;
+        } | undefined;
+        cross_org?: "allow" | "in_org_only" | undefined;
+    }>>;
 }, "strip", z.ZodTypeAny, {
     description: string;
     system_prompt: string;
@@ -70,6 +449,41 @@ export declare const createAgentSchema: z.ZodObject<{
     knowledge_sources?: string[] | undefined;
     trigger_tags?: string[] | undefined;
     enabled?: boolean | undefined;
+    permissions?: {
+        tool_access?: {
+            mode: "allow_all" | "allow_list" | "deny_list";
+            tools: string[];
+        } | undefined;
+        memory?: {
+            session?: {
+                read: boolean;
+                write: boolean;
+            } | undefined;
+            caller?: {
+                read: boolean;
+                write: boolean;
+            } | undefined;
+            business?: {
+                read: boolean;
+                write: boolean;
+            } | undefined;
+            kind?: {
+                read: boolean;
+                write: boolean;
+            } | undefined;
+            global?: {
+                read: boolean;
+                write: boolean;
+            } | undefined;
+        } | undefined;
+        pii_policy?: "allow" | "redact" | "forbid" | undefined;
+        budget?: {
+            tokens_per_turn?: number | undefined;
+            tool_calls?: number | undefined;
+            wall_clock_ms?: number | undefined;
+        } | undefined;
+        cross_org?: "allow" | "in_org_only" | undefined;
+    } | undefined;
 }, {
     description: string;
     system_prompt: string;
@@ -84,6 +498,41 @@ export declare const createAgentSchema: z.ZodObject<{
     knowledge_sources?: string[] | undefined;
     trigger_tags?: string[] | undefined;
     enabled?: boolean | undefined;
+    permissions?: {
+        tool_access?: {
+            mode: "allow_all" | "allow_list" | "deny_list";
+            tools?: string[] | undefined;
+        } | undefined;
+        memory?: {
+            session?: {
+                read: boolean;
+                write: boolean;
+            } | undefined;
+            caller?: {
+                read: boolean;
+                write: boolean;
+            } | undefined;
+            business?: {
+                read: boolean;
+                write: boolean;
+            } | undefined;
+            kind?: {
+                read: boolean;
+                write: boolean;
+            } | undefined;
+            global?: {
+                read: boolean;
+                write: boolean;
+            } | undefined;
+        } | undefined;
+        pii_policy?: "allow" | "redact" | "forbid" | undefined;
+        budget?: {
+            tokens_per_turn?: number | undefined;
+            tool_calls?: number | undefined;
+            wall_clock_ms?: number | undefined;
+        } | undefined;
+        cross_org?: "allow" | "in_org_only" | undefined;
+    } | undefined;
 }>;
 export type CreateAgentInput = z.infer<typeof createAgentSchema>;
 export declare const updateAgentSchema: z.ZodObject<{
@@ -114,9 +563,197 @@ export declare const updateAgentSchema: z.ZodObject<{
     knowledge_sources: z.ZodOptional<z.ZodArray<z.ZodString, "many">>;
     trigger_tags: z.ZodOptional<z.ZodArray<z.ZodString, "many">>;
     enabled: z.ZodOptional<z.ZodBoolean>;
+    permissions: z.ZodNullable<z.ZodOptional<z.ZodObject<{
+        tool_access: z.ZodOptional<z.ZodObject<{
+            mode: z.ZodEnum<["allow_all", "allow_list", "deny_list"]>;
+            tools: z.ZodDefault<z.ZodOptional<z.ZodArray<z.ZodString, "many">>>;
+        }, "strip", z.ZodTypeAny, {
+            mode: "allow_all" | "allow_list" | "deny_list";
+            tools: string[];
+        }, {
+            mode: "allow_all" | "allow_list" | "deny_list";
+            tools?: string[] | undefined;
+        }>>;
+        memory: z.ZodOptional<z.ZodObject<{
+            session: z.ZodOptional<z.ZodObject<{
+                read: z.ZodBoolean;
+                write: z.ZodBoolean;
+            }, "strip", z.ZodTypeAny, {
+                read: boolean;
+                write: boolean;
+            }, {
+                read: boolean;
+                write: boolean;
+            }>>;
+            caller: z.ZodOptional<z.ZodObject<{
+                read: z.ZodBoolean;
+                write: z.ZodBoolean;
+            }, "strip", z.ZodTypeAny, {
+                read: boolean;
+                write: boolean;
+            }, {
+                read: boolean;
+                write: boolean;
+            }>>;
+            business: z.ZodOptional<z.ZodObject<{
+                read: z.ZodBoolean;
+                write: z.ZodBoolean;
+            }, "strip", z.ZodTypeAny, {
+                read: boolean;
+                write: boolean;
+            }, {
+                read: boolean;
+                write: boolean;
+            }>>;
+            kind: z.ZodOptional<z.ZodObject<{
+                read: z.ZodBoolean;
+                write: z.ZodBoolean;
+            }, "strip", z.ZodTypeAny, {
+                read: boolean;
+                write: boolean;
+            }, {
+                read: boolean;
+                write: boolean;
+            }>>;
+            global: z.ZodOptional<z.ZodObject<{
+                read: z.ZodBoolean;
+                write: z.ZodBoolean;
+            }, "strip", z.ZodTypeAny, {
+                read: boolean;
+                write: boolean;
+            }, {
+                read: boolean;
+                write: boolean;
+            }>>;
+        }, "strip", z.ZodTypeAny, {
+            session?: {
+                read: boolean;
+                write: boolean;
+            } | undefined;
+            caller?: {
+                read: boolean;
+                write: boolean;
+            } | undefined;
+            business?: {
+                read: boolean;
+                write: boolean;
+            } | undefined;
+            kind?: {
+                read: boolean;
+                write: boolean;
+            } | undefined;
+            global?: {
+                read: boolean;
+                write: boolean;
+            } | undefined;
+        }, {
+            session?: {
+                read: boolean;
+                write: boolean;
+            } | undefined;
+            caller?: {
+                read: boolean;
+                write: boolean;
+            } | undefined;
+            business?: {
+                read: boolean;
+                write: boolean;
+            } | undefined;
+            kind?: {
+                read: boolean;
+                write: boolean;
+            } | undefined;
+            global?: {
+                read: boolean;
+                write: boolean;
+            } | undefined;
+        }>>;
+        pii_policy: z.ZodOptional<z.ZodEnum<["allow", "redact", "forbid"]>>;
+        budget: z.ZodOptional<z.ZodObject<{
+            tokens_per_turn: z.ZodOptional<z.ZodNumber>;
+            tool_calls: z.ZodOptional<z.ZodNumber>;
+            wall_clock_ms: z.ZodOptional<z.ZodNumber>;
+        }, "strip", z.ZodTypeAny, {
+            tokens_per_turn?: number | undefined;
+            tool_calls?: number | undefined;
+            wall_clock_ms?: number | undefined;
+        }, {
+            tokens_per_turn?: number | undefined;
+            tool_calls?: number | undefined;
+            wall_clock_ms?: number | undefined;
+        }>>;
+        cross_org: z.ZodOptional<z.ZodEnum<["in_org_only", "allow"]>>;
+    }, "strip", z.ZodTypeAny, {
+        tool_access?: {
+            mode: "allow_all" | "allow_list" | "deny_list";
+            tools: string[];
+        } | undefined;
+        memory?: {
+            session?: {
+                read: boolean;
+                write: boolean;
+            } | undefined;
+            caller?: {
+                read: boolean;
+                write: boolean;
+            } | undefined;
+            business?: {
+                read: boolean;
+                write: boolean;
+            } | undefined;
+            kind?: {
+                read: boolean;
+                write: boolean;
+            } | undefined;
+            global?: {
+                read: boolean;
+                write: boolean;
+            } | undefined;
+        } | undefined;
+        pii_policy?: "allow" | "redact" | "forbid" | undefined;
+        budget?: {
+            tokens_per_turn?: number | undefined;
+            tool_calls?: number | undefined;
+            wall_clock_ms?: number | undefined;
+        } | undefined;
+        cross_org?: "allow" | "in_org_only" | undefined;
+    }, {
+        tool_access?: {
+            mode: "allow_all" | "allow_list" | "deny_list";
+            tools?: string[] | undefined;
+        } | undefined;
+        memory?: {
+            session?: {
+                read: boolean;
+                write: boolean;
+            } | undefined;
+            caller?: {
+                read: boolean;
+                write: boolean;
+            } | undefined;
+            business?: {
+                read: boolean;
+                write: boolean;
+            } | undefined;
+            kind?: {
+                read: boolean;
+                write: boolean;
+            } | undefined;
+            global?: {
+                read: boolean;
+                write: boolean;
+            } | undefined;
+        } | undefined;
+        pii_policy?: "allow" | "redact" | "forbid" | undefined;
+        budget?: {
+            tokens_per_turn?: number | undefined;
+            tool_calls?: number | undefined;
+            wall_clock_ms?: number | undefined;
+        } | undefined;
+        cross_org?: "allow" | "in_org_only" | undefined;
+    }>>>;
 }, "strip", z.ZodTypeAny, {
     description?: string | undefined;
-    system_prompt?: string | undefined;
     tools?: {
         name: string;
         description: string;
@@ -125,12 +762,47 @@ export declare const updateAgentSchema: z.ZodObject<{
         auth_ssm_path?: string | undefined;
         requires_confirmation?: boolean | undefined;
     }[] | undefined;
+    system_prompt?: string | undefined;
     knowledge_sources?: string[] | undefined;
     trigger_tags?: string[] | undefined;
     enabled?: boolean | undefined;
+    permissions?: {
+        tool_access?: {
+            mode: "allow_all" | "allow_list" | "deny_list";
+            tools: string[];
+        } | undefined;
+        memory?: {
+            session?: {
+                read: boolean;
+                write: boolean;
+            } | undefined;
+            caller?: {
+                read: boolean;
+                write: boolean;
+            } | undefined;
+            business?: {
+                read: boolean;
+                write: boolean;
+            } | undefined;
+            kind?: {
+                read: boolean;
+                write: boolean;
+            } | undefined;
+            global?: {
+                read: boolean;
+                write: boolean;
+            } | undefined;
+        } | undefined;
+        pii_policy?: "allow" | "redact" | "forbid" | undefined;
+        budget?: {
+            tokens_per_turn?: number | undefined;
+            tool_calls?: number | undefined;
+            wall_clock_ms?: number | undefined;
+        } | undefined;
+        cross_org?: "allow" | "in_org_only" | undefined;
+    } | null | undefined;
 }, {
     description?: string | undefined;
-    system_prompt?: string | undefined;
     tools?: {
         name: string;
         description: string;
@@ -139,8 +811,44 @@ export declare const updateAgentSchema: z.ZodObject<{
         auth_ssm_path?: string | undefined;
         requires_confirmation?: boolean | undefined;
     }[] | undefined;
+    system_prompt?: string | undefined;
     knowledge_sources?: string[] | undefined;
     trigger_tags?: string[] | undefined;
     enabled?: boolean | undefined;
+    permissions?: {
+        tool_access?: {
+            mode: "allow_all" | "allow_list" | "deny_list";
+            tools?: string[] | undefined;
+        } | undefined;
+        memory?: {
+            session?: {
+                read: boolean;
+                write: boolean;
+            } | undefined;
+            caller?: {
+                read: boolean;
+                write: boolean;
+            } | undefined;
+            business?: {
+                read: boolean;
+                write: boolean;
+            } | undefined;
+            kind?: {
+                read: boolean;
+                write: boolean;
+            } | undefined;
+            global?: {
+                read: boolean;
+                write: boolean;
+            } | undefined;
+        } | undefined;
+        pii_policy?: "allow" | "redact" | "forbid" | undefined;
+        budget?: {
+            tokens_per_turn?: number | undefined;
+            tool_calls?: number | undefined;
+            wall_clock_ms?: number | undefined;
+        } | undefined;
+        cross_org?: "allow" | "in_org_only" | undefined;
+    } | null | undefined;
 }>;
 export type UpdateAgentInput = z.infer<typeof updateAgentSchema>;
