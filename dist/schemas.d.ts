@@ -147,7 +147,18 @@ export declare const agentPermissionsSchema: z.ZodObject<{
         tool_calls?: number | undefined;
         wall_clock_ms?: number | undefined;
     }>>;
-    cross_org: z.ZodOptional<z.ZodEnum<["in_org_only", "allow"]>>;
+    cross_org: z.ZodOptional<z.ZodObject<{
+        mode: z.ZodEnum<["in_org_only", "approved", "allow"]>;
+        approved_businesses: z.ZodOptional<z.ZodArray<z.ZodString, "many">>;
+    }, "strip", z.ZodTypeAny, {
+        mode: "allow" | "in_org_only" | "approved";
+        approved_businesses?: string[] | undefined;
+    }, {
+        mode: "allow" | "in_org_only" | "approved";
+        approved_businesses?: string[] | undefined;
+    }>>;
+    allowed_agents: z.ZodOptional<z.ZodArray<z.ZodString, "many">>;
+    allowed_hosts: z.ZodOptional<z.ZodArray<z.ZodString, "many">>;
 }, "strip", z.ZodTypeAny, {
     tool_access?: {
         mode: "allow_all" | "allow_list" | "deny_list";
@@ -181,7 +192,12 @@ export declare const agentPermissionsSchema: z.ZodObject<{
         tool_calls?: number | undefined;
         wall_clock_ms?: number | undefined;
     } | undefined;
-    cross_org?: "allow" | "in_org_only" | undefined;
+    cross_org?: {
+        mode: "allow" | "in_org_only" | "approved";
+        approved_businesses?: string[] | undefined;
+    } | undefined;
+    allowed_agents?: string[] | undefined;
+    allowed_hosts?: string[] | undefined;
 }, {
     tool_access?: {
         mode: "allow_all" | "allow_list" | "deny_list";
@@ -215,7 +231,12 @@ export declare const agentPermissionsSchema: z.ZodObject<{
         tool_calls?: number | undefined;
         wall_clock_ms?: number | undefined;
     } | undefined;
-    cross_org?: "allow" | "in_org_only" | undefined;
+    cross_org?: {
+        mode: "allow" | "in_org_only" | "approved";
+        approved_businesses?: string[] | undefined;
+    } | undefined;
+    allowed_agents?: string[] | undefined;
+    allowed_hosts?: string[] | undefined;
 }>;
 export type AgentPermissionsInput = z.infer<typeof agentPermissionsSchema>;
 export declare const createAgentSchema: z.ZodObject<{
@@ -365,7 +386,18 @@ export declare const createAgentSchema: z.ZodObject<{
             tool_calls?: number | undefined;
             wall_clock_ms?: number | undefined;
         }>>;
-        cross_org: z.ZodOptional<z.ZodEnum<["in_org_only", "allow"]>>;
+        cross_org: z.ZodOptional<z.ZodObject<{
+            mode: z.ZodEnum<["in_org_only", "approved", "allow"]>;
+            approved_businesses: z.ZodOptional<z.ZodArray<z.ZodString, "many">>;
+        }, "strip", z.ZodTypeAny, {
+            mode: "allow" | "in_org_only" | "approved";
+            approved_businesses?: string[] | undefined;
+        }, {
+            mode: "allow" | "in_org_only" | "approved";
+            approved_businesses?: string[] | undefined;
+        }>>;
+        allowed_agents: z.ZodOptional<z.ZodArray<z.ZodString, "many">>;
+        allowed_hosts: z.ZodOptional<z.ZodArray<z.ZodString, "many">>;
     }, "strip", z.ZodTypeAny, {
         tool_access?: {
             mode: "allow_all" | "allow_list" | "deny_list";
@@ -399,7 +431,12 @@ export declare const createAgentSchema: z.ZodObject<{
             tool_calls?: number | undefined;
             wall_clock_ms?: number | undefined;
         } | undefined;
-        cross_org?: "allow" | "in_org_only" | undefined;
+        cross_org?: {
+            mode: "allow" | "in_org_only" | "approved";
+            approved_businesses?: string[] | undefined;
+        } | undefined;
+        allowed_agents?: string[] | undefined;
+        allowed_hosts?: string[] | undefined;
     }, {
         tool_access?: {
             mode: "allow_all" | "allow_list" | "deny_list";
@@ -433,7 +470,12 @@ export declare const createAgentSchema: z.ZodObject<{
             tool_calls?: number | undefined;
             wall_clock_ms?: number | undefined;
         } | undefined;
-        cross_org?: "allow" | "in_org_only" | undefined;
+        cross_org?: {
+            mode: "allow" | "in_org_only" | "approved";
+            approved_businesses?: string[] | undefined;
+        } | undefined;
+        allowed_agents?: string[] | undefined;
+        allowed_hosts?: string[] | undefined;
     }>>;
 }, "strip", z.ZodTypeAny, {
     description: string;
@@ -482,7 +524,12 @@ export declare const createAgentSchema: z.ZodObject<{
             tool_calls?: number | undefined;
             wall_clock_ms?: number | undefined;
         } | undefined;
-        cross_org?: "allow" | "in_org_only" | undefined;
+        cross_org?: {
+            mode: "allow" | "in_org_only" | "approved";
+            approved_businesses?: string[] | undefined;
+        } | undefined;
+        allowed_agents?: string[] | undefined;
+        allowed_hosts?: string[] | undefined;
     } | undefined;
 }, {
     description: string;
@@ -531,7 +578,12 @@ export declare const createAgentSchema: z.ZodObject<{
             tool_calls?: number | undefined;
             wall_clock_ms?: number | undefined;
         } | undefined;
-        cross_org?: "allow" | "in_org_only" | undefined;
+        cross_org?: {
+            mode: "allow" | "in_org_only" | "approved";
+            approved_businesses?: string[] | undefined;
+        } | undefined;
+        allowed_agents?: string[] | undefined;
+        allowed_hosts?: string[] | undefined;
     } | undefined;
 }>;
 export type CreateAgentInput = z.infer<typeof createAgentSchema>;
@@ -682,7 +734,18 @@ export declare const updateAgentSchema: z.ZodObject<{
             tool_calls?: number | undefined;
             wall_clock_ms?: number | undefined;
         }>>;
-        cross_org: z.ZodOptional<z.ZodEnum<["in_org_only", "allow"]>>;
+        cross_org: z.ZodOptional<z.ZodObject<{
+            mode: z.ZodEnum<["in_org_only", "approved", "allow"]>;
+            approved_businesses: z.ZodOptional<z.ZodArray<z.ZodString, "many">>;
+        }, "strip", z.ZodTypeAny, {
+            mode: "allow" | "in_org_only" | "approved";
+            approved_businesses?: string[] | undefined;
+        }, {
+            mode: "allow" | "in_org_only" | "approved";
+            approved_businesses?: string[] | undefined;
+        }>>;
+        allowed_agents: z.ZodOptional<z.ZodArray<z.ZodString, "many">>;
+        allowed_hosts: z.ZodOptional<z.ZodArray<z.ZodString, "many">>;
     }, "strip", z.ZodTypeAny, {
         tool_access?: {
             mode: "allow_all" | "allow_list" | "deny_list";
@@ -716,7 +779,12 @@ export declare const updateAgentSchema: z.ZodObject<{
             tool_calls?: number | undefined;
             wall_clock_ms?: number | undefined;
         } | undefined;
-        cross_org?: "allow" | "in_org_only" | undefined;
+        cross_org?: {
+            mode: "allow" | "in_org_only" | "approved";
+            approved_businesses?: string[] | undefined;
+        } | undefined;
+        allowed_agents?: string[] | undefined;
+        allowed_hosts?: string[] | undefined;
     }, {
         tool_access?: {
             mode: "allow_all" | "allow_list" | "deny_list";
@@ -750,7 +818,12 @@ export declare const updateAgentSchema: z.ZodObject<{
             tool_calls?: number | undefined;
             wall_clock_ms?: number | undefined;
         } | undefined;
-        cross_org?: "allow" | "in_org_only" | undefined;
+        cross_org?: {
+            mode: "allow" | "in_org_only" | "approved";
+            approved_businesses?: string[] | undefined;
+        } | undefined;
+        allowed_agents?: string[] | undefined;
+        allowed_hosts?: string[] | undefined;
     }>>>;
 }, "strip", z.ZodTypeAny, {
     description?: string | undefined;
@@ -799,7 +872,12 @@ export declare const updateAgentSchema: z.ZodObject<{
             tool_calls?: number | undefined;
             wall_clock_ms?: number | undefined;
         } | undefined;
-        cross_org?: "allow" | "in_org_only" | undefined;
+        cross_org?: {
+            mode: "allow" | "in_org_only" | "approved";
+            approved_businesses?: string[] | undefined;
+        } | undefined;
+        allowed_agents?: string[] | undefined;
+        allowed_hosts?: string[] | undefined;
     } | null | undefined;
 }, {
     description?: string | undefined;
@@ -848,7 +926,12 @@ export declare const updateAgentSchema: z.ZodObject<{
             tool_calls?: number | undefined;
             wall_clock_ms?: number | undefined;
         } | undefined;
-        cross_org?: "allow" | "in_org_only" | undefined;
+        cross_org?: {
+            mode: "allow" | "in_org_only" | "approved";
+            approved_businesses?: string[] | undefined;
+        } | undefined;
+        allowed_agents?: string[] | undefined;
+        allowed_hosts?: string[] | undefined;
     } | null | undefined;
 }>;
 export type UpdateAgentInput = z.infer<typeof updateAgentSchema>;

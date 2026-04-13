@@ -62,7 +62,12 @@ export const agentPermissionsSchema = z.object({
     tool_calls: z.number().int().min(1).max(1000).optional(),
     wall_clock_ms: z.number().int().min(1000).max(300000).optional(),
   }).optional(),
-  cross_org: z.enum(["in_org_only", "allow"]).optional(),
+  cross_org: z.object({
+    mode: z.enum(["in_org_only", "approved", "allow"]),
+    approved_businesses: z.array(z.string()).optional(),
+  }).optional(),
+  allowed_agents: z.array(z.string()).optional().describe("Agent IDs this agent can hand off to. Omit for unrestricted."),
+  allowed_hosts: z.array(z.string()).optional().describe("External domains this agent can reach. Omit to auto-derive from tools."),
 });
 
 export type AgentPermissionsInput = z.infer<typeof agentPermissionsSchema>;

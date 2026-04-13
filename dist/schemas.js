@@ -51,7 +51,12 @@ exports.agentPermissionsSchema = zod_1.z.object({
         tool_calls: zod_1.z.number().int().min(1).max(1000).optional(),
         wall_clock_ms: zod_1.z.number().int().min(1000).max(300000).optional(),
     }).optional(),
-    cross_org: zod_1.z.enum(["in_org_only", "allow"]).optional(),
+    cross_org: zod_1.z.object({
+        mode: zod_1.z.enum(["in_org_only", "approved", "allow"]),
+        approved_businesses: zod_1.z.array(zod_1.z.string()).optional(),
+    }).optional(),
+    allowed_agents: zod_1.z.array(zod_1.z.string()).optional().describe("Agent IDs this agent can hand off to. Omit for unrestricted."),
+    allowed_hosts: zod_1.z.array(zod_1.z.string()).optional().describe("External domains this agent can reach. Omit to auto-derive from tools."),
 });
 // ── Create agent ────────────────────────────────────────────────────── //
 exports.createAgentSchema = zod_1.z.object({
