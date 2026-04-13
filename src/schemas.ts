@@ -37,6 +37,36 @@ export const toolDefinitionSchema = z.object({
 
 export type ToolDefinitionInput = z.infer<typeof toolDefinitionSchema>;
 
+// ── Agent permissions ──────────────────────────────────────────────── //
+
+const readWritePermSchema = z.object({
+  read: z.boolean(),
+  write: z.boolean(),
+});
+
+export const agentPermissionsSchema = z.object({
+  tool_access: z.object({
+    mode: z.enum(["allow_all", "allow_list", "deny_list"]),
+    tools: z.array(z.string()).optional().default([]),
+  }).optional(),
+  memory: z.object({
+    session: readWritePermSchema.optional(),
+    caller: readWritePermSchema.optional(),
+    business: readWritePermSchema.optional(),
+    kind: readWritePermSchema.optional(),
+    global: readWritePermSchema.optional(),
+  }).optional(),
+  pii_policy: z.enum(["allow", "redact", "forbid"]).optional(),
+  budget: z.object({
+    tokens_per_turn: z.number().int().min(1).max(1000000).optional(),
+    tool_calls: z.number().int().min(1).max(1000).optional(),
+    wall_clock_ms: z.number().int().min(1000).max(300000).optional(),
+  }).optional(),
+  cross_org: z.enum(["in_org_only", "allow"]).optional(),
+});
+
+export type AgentPermissionsInput = z.infer<typeof agentPermissionsSchema>;
+
 // ── Create agent ────────────────────────────────────────────────────── //
 
 export const createAgentSchema = z.object({
@@ -78,6 +108,7 @@ export const createAgentSchema = z.object({
     )
     .optional(),
   enabled: z.boolean().optional(),
+  permissions: agentPermissionsSchema.optional(),
 });
 
 export type CreateAgentInput = z.infer<typeof createAgentSchema>;
@@ -125,6 +156,7 @@ export const updateAgentSchema = z.object({
     )
     .optional(),
   enabled: z.boolean().optional(),
+  permissions: agentPermissionsSchema.optional().nullable(),
 });
 
 export type UpdateAgentInput = z.infer<typeof updateAgentSchema>;
