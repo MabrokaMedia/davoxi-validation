@@ -10,6 +10,7 @@ export declare const toolDefinitionSchema: z.ZodObject<{
     description: z.ZodString;
     parameters: z.ZodRecord<z.ZodString, z.ZodUnknown>;
     endpoint: z.ZodOptional<z.ZodString>;
+    http_method: z.ZodOptional<z.ZodEnum<["GET", "POST", "PUT", "PATCH", "DELETE"]>>;
     auth_ssm_path: z.ZodOptional<z.ZodString>;
     requires_confirmation: z.ZodOptional<z.ZodBoolean>;
 }, "strip", z.ZodTypeAny, {
@@ -17,6 +18,7 @@ export declare const toolDefinitionSchema: z.ZodObject<{
     description: string;
     parameters: Record<string, unknown>;
     endpoint?: string | undefined;
+    http_method?: "GET" | "POST" | "PUT" | "PATCH" | "DELETE" | undefined;
     auth_ssm_path?: string | undefined;
     requires_confirmation?: boolean | undefined;
 }, {
@@ -24,6 +26,7 @@ export declare const toolDefinitionSchema: z.ZodObject<{
     description: string;
     parameters: Record<string, unknown>;
     endpoint?: string | undefined;
+    http_method?: "GET" | "POST" | "PUT" | "PATCH" | "DELETE" | undefined;
     auth_ssm_path?: string | undefined;
     requires_confirmation?: boolean | undefined;
 }>;
@@ -247,6 +250,7 @@ export declare const createAgentSchema: z.ZodObject<{
         description: z.ZodString;
         parameters: z.ZodRecord<z.ZodString, z.ZodUnknown>;
         endpoint: z.ZodOptional<z.ZodString>;
+        http_method: z.ZodOptional<z.ZodEnum<["GET", "POST", "PUT", "PATCH", "DELETE"]>>;
         auth_ssm_path: z.ZodOptional<z.ZodString>;
         requires_confirmation: z.ZodOptional<z.ZodBoolean>;
     }, "strip", z.ZodTypeAny, {
@@ -254,6 +258,7 @@ export declare const createAgentSchema: z.ZodObject<{
         description: string;
         parameters: Record<string, unknown>;
         endpoint?: string | undefined;
+        http_method?: "GET" | "POST" | "PUT" | "PATCH" | "DELETE" | undefined;
         auth_ssm_path?: string | undefined;
         requires_confirmation?: boolean | undefined;
     }, {
@@ -261,6 +266,7 @@ export declare const createAgentSchema: z.ZodObject<{
         description: string;
         parameters: Record<string, unknown>;
         endpoint?: string | undefined;
+        http_method?: "GET" | "POST" | "PUT" | "PATCH" | "DELETE" | undefined;
         auth_ssm_path?: string | undefined;
         requires_confirmation?: boolean | undefined;
     }>, "many">>;
@@ -485,6 +491,7 @@ export declare const createAgentSchema: z.ZodObject<{
         description: string;
         parameters: Record<string, unknown>;
         endpoint?: string | undefined;
+        http_method?: "GET" | "POST" | "PUT" | "PATCH" | "DELETE" | undefined;
         auth_ssm_path?: string | undefined;
         requires_confirmation?: boolean | undefined;
     }[] | undefined;
@@ -539,6 +546,7 @@ export declare const createAgentSchema: z.ZodObject<{
         description: string;
         parameters: Record<string, unknown>;
         endpoint?: string | undefined;
+        http_method?: "GET" | "POST" | "PUT" | "PATCH" | "DELETE" | undefined;
         auth_ssm_path?: string | undefined;
         requires_confirmation?: boolean | undefined;
     }[] | undefined;
@@ -595,6 +603,7 @@ export declare const updateAgentSchema: z.ZodObject<{
         description: z.ZodString;
         parameters: z.ZodRecord<z.ZodString, z.ZodUnknown>;
         endpoint: z.ZodOptional<z.ZodString>;
+        http_method: z.ZodOptional<z.ZodEnum<["GET", "POST", "PUT", "PATCH", "DELETE"]>>;
         auth_ssm_path: z.ZodOptional<z.ZodString>;
         requires_confirmation: z.ZodOptional<z.ZodBoolean>;
     }, "strip", z.ZodTypeAny, {
@@ -602,6 +611,7 @@ export declare const updateAgentSchema: z.ZodObject<{
         description: string;
         parameters: Record<string, unknown>;
         endpoint?: string | undefined;
+        http_method?: "GET" | "POST" | "PUT" | "PATCH" | "DELETE" | undefined;
         auth_ssm_path?: string | undefined;
         requires_confirmation?: boolean | undefined;
     }, {
@@ -609,6 +619,7 @@ export declare const updateAgentSchema: z.ZodObject<{
         description: string;
         parameters: Record<string, unknown>;
         endpoint?: string | undefined;
+        http_method?: "GET" | "POST" | "PUT" | "PATCH" | "DELETE" | undefined;
         auth_ssm_path?: string | undefined;
         requires_confirmation?: boolean | undefined;
     }>, "many">>;
@@ -832,6 +843,7 @@ export declare const updateAgentSchema: z.ZodObject<{
         description: string;
         parameters: Record<string, unknown>;
         endpoint?: string | undefined;
+        http_method?: "GET" | "POST" | "PUT" | "PATCH" | "DELETE" | undefined;
         auth_ssm_path?: string | undefined;
         requires_confirmation?: boolean | undefined;
     }[] | undefined;
@@ -886,6 +898,7 @@ export declare const updateAgentSchema: z.ZodObject<{
         description: string;
         parameters: Record<string, unknown>;
         endpoint?: string | undefined;
+        http_method?: "GET" | "POST" | "PUT" | "PATCH" | "DELETE" | undefined;
         auth_ssm_path?: string | undefined;
         requires_confirmation?: boolean | undefined;
     }[] | undefined;

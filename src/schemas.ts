@@ -24,14 +24,18 @@ export const toolDefinitionSchema = z.object({
     ),
   parameters: z.record(z.unknown()).describe("JSON Schema describing the tool's parameters."),
   endpoint: z.string().url("Tool endpoint must be a valid URL").optional(),
+  http_method: z
+    .enum(["GET", "POST", "PUT", "PATCH", "DELETE"])
+    .optional()
+    .describe("HTTP method for the tool endpoint. Defaults to POST."),
   auth_ssm_path: z
     .string()
-    .min(1)
     .max(
       TOOL_LIMITS.SSM_PATH_MAX,
       `SSM path must be at most ${TOOL_LIMITS.SSM_PATH_MAX} characters`,
     )
-    .optional(),
+    .optional()
+    .describe("SSM parameter path for auth credentials. Leave empty/omitted for public APIs."),
   requires_confirmation: z.boolean().optional(),
 });
 

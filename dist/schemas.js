@@ -21,11 +21,15 @@ exports.toolDefinitionSchema = zod_1.z.object({
         .max(constants_1.TOOL_LIMITS.DESCRIPTION_MAX, `Tool description must be at most ${constants_1.TOOL_LIMITS.DESCRIPTION_MAX} characters`),
     parameters: zod_1.z.record(zod_1.z.unknown()).describe("JSON Schema describing the tool's parameters."),
     endpoint: zod_1.z.string().url("Tool endpoint must be a valid URL").optional(),
+    http_method: zod_1.z
+        .enum(["GET", "POST", "PUT", "PATCH", "DELETE"])
+        .optional()
+        .describe("HTTP method for the tool endpoint. Defaults to POST."),
     auth_ssm_path: zod_1.z
         .string()
-        .min(1)
         .max(constants_1.TOOL_LIMITS.SSM_PATH_MAX, `SSM path must be at most ${constants_1.TOOL_LIMITS.SSM_PATH_MAX} characters`)
-        .optional(),
+        .optional()
+        .describe("SSM parameter path for auth credentials. Leave empty/omitted for public APIs."),
     requires_confirmation: zod_1.z.boolean().optional(),
 });
 // ── Agent permissions ──────────────────────────────────────────────── //
