@@ -35,7 +35,11 @@ export const toolDefinitionSchema = z.object({
       `SSM path must be at most ${TOOL_LIMITS.SSM_PATH_MAX} characters`,
     )
     .optional()
-    .describe("SSM parameter path for auth credentials. Leave empty/omitted for public APIs."),
+    .describe(
+      "SSM parameter path for auth credentials. For public APIs: leave empty/omitted. " +
+        "For authenticated APIs: use `list_tool_credentials` to see available credentials " +
+        "and copy the matching `ssm_path` here. Create new credentials via `set_tool_credential`.",
+    ),
   requires_confirmation: z.boolean().optional(),
 });
 

@@ -29,7 +29,9 @@ exports.toolDefinitionSchema = zod_1.z.object({
         .string()
         .max(constants_1.TOOL_LIMITS.SSM_PATH_MAX, `SSM path must be at most ${constants_1.TOOL_LIMITS.SSM_PATH_MAX} characters`)
         .optional()
-        .describe("SSM parameter path for auth credentials. Leave empty/omitted for public APIs."),
+        .describe("SSM parameter path for auth credentials. For public APIs: leave empty/omitted. " +
+        "For authenticated APIs: use `list_tool_credentials` to see available credentials " +
+        "and copy the matching `ssm_path` here. Create new credentials via `set_tool_credential`."),
     requires_confirmation: zod_1.z.boolean().optional(),
 });
 // ── Agent permissions ──────────────────────────────────────────────── //
