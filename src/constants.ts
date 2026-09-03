@@ -9,6 +9,8 @@
 // ── Agent field limits ──────────────────────────────────────────────── //
 
 export const AGENT_LIMITS = {
+  /** Max length of the agent's human name. */
+  NAME_MAX: 80,
   /** Max length of agent description. */
   DESCRIPTION_MAX: 5_000,
   /** Max length of agent system prompt. */
