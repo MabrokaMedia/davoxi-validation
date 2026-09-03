@@ -10,6 +10,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.BLOCKED_HOSTNAMES = exports.PRIVATE_IPV6_PREFIXES = exports.PRIVATE_172_RANGE = exports.PRIVATE_IPV4_PREFIXES = exports.TOOL_LIMITS = exports.AGENT_LIMITS = void 0;
 // ── Agent field limits ──────────────────────────────────────────────── //
 exports.AGENT_LIMITS = {
+    /** Max length of the agent's human name. */
+    NAME_MAX: 80,
     /** Max length of agent description. */
     DESCRIPTION_MAX: 5_000,
     /** Max length of agent system prompt. */

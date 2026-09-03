@@ -243,6 +243,9 @@ export declare const agentPermissionsSchema: z.ZodObject<{
 }>;
 export type AgentPermissionsInput = z.infer<typeof agentPermissionsSchema>;
 export declare const createAgentSchema: z.ZodObject<{
+    /** Human label for the agent. Optional: agents predate it, and the
+     *  console falls back to the capability or the description. */
+    name: z.ZodOptional<z.ZodString>;
     description: z.ZodString;
     system_prompt: z.ZodString;
     tools: z.ZodOptional<z.ZodArray<z.ZodObject<{
@@ -486,6 +489,7 @@ export declare const createAgentSchema: z.ZodObject<{
 }, "strip", z.ZodTypeAny, {
     description: string;
     system_prompt: string;
+    name?: string | undefined;
     tools?: {
         name: string;
         description: string;
@@ -541,6 +545,7 @@ export declare const createAgentSchema: z.ZodObject<{
 }, {
     description: string;
     system_prompt: string;
+    name?: string | undefined;
     tools?: {
         name: string;
         description: string;
@@ -596,6 +601,9 @@ export declare const createAgentSchema: z.ZodObject<{
 }>;
 export type CreateAgentInput = z.infer<typeof createAgentSchema>;
 export declare const updateAgentSchema: z.ZodObject<{
+    /** Human label for the agent. Optional: agents predate it, and the
+     *  console falls back to the capability or the description. */
+    name: z.ZodOptional<z.ZodString>;
     description: z.ZodOptional<z.ZodString>;
     system_prompt: z.ZodOptional<z.ZodString>;
     tools: z.ZodOptional<z.ZodArray<z.ZodObject<{
@@ -837,6 +845,7 @@ export declare const updateAgentSchema: z.ZodObject<{
         allowed_hosts?: string[] | undefined;
     }>>>;
 }, "strip", z.ZodTypeAny, {
+    name?: string | undefined;
     description?: string | undefined;
     tools?: {
         name: string;
@@ -892,6 +901,7 @@ export declare const updateAgentSchema: z.ZodObject<{
         allowed_hosts?: string[] | undefined;
     } | null | undefined;
 }, {
+    name?: string | undefined;
     description?: string | undefined;
     tools?: {
         name: string;

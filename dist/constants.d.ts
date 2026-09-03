@@ -6,6 +6,8 @@
  * limits change, update them here and every consumer picks them up.
  */
 export declare const AGENT_LIMITS: {
+    /** Max length of the agent's human name. */
+    readonly NAME_MAX: 80;
     /** Max length of agent description. */
     readonly DESCRIPTION_MAX: 5000;
     /** Max length of agent system prompt. */

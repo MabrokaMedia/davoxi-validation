@@ -66,6 +66,12 @@ exports.agentPermissionsSchema = zod_1.z.object({
 });
 // ── Create agent ────────────────────────────────────────────────────── //
 exports.createAgentSchema = zod_1.z.object({
+    /** Human label for the agent. Optional: agents predate it, and the
+     *  console falls back to the capability or the description. */
+    name: zod_1.z
+        .string()
+        .max(constants_1.AGENT_LIMITS.NAME_MAX, `Name must be at most ${constants_1.AGENT_LIMITS.NAME_MAX} characters`)
+        .optional(),
     description: zod_1.z
         .string()
         .min(1, "Description is required")
@@ -91,6 +97,12 @@ exports.createAgentSchema = zod_1.z.object({
 });
 // ── Update agent (all fields optional) ──────────────────────────────── //
 exports.updateAgentSchema = zod_1.z.object({
+    /** Human label for the agent. Optional: agents predate it, and the
+     *  console falls back to the capability or the description. */
+    name: zod_1.z
+        .string()
+        .max(constants_1.AGENT_LIMITS.NAME_MAX, `Name must be at most ${constants_1.AGENT_LIMITS.NAME_MAX} characters`)
+        .optional(),
     description: zod_1.z
         .string()
         .min(1, "Description must not be empty")
