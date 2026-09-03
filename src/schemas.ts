@@ -83,6 +83,15 @@ export type AgentPermissionsInput = z.infer<typeof agentPermissionsSchema>;
 // ── Create agent ────────────────────────────────────────────────────── //
 
 export const createAgentSchema = z.object({
+  /** Human label for the agent. Optional: agents predate it, and the
+   *  console falls back to the capability or the description. */
+  name: z
+    .string()
+    .max(
+      AGENT_LIMITS.NAME_MAX,
+      `Name must be at most ${AGENT_LIMITS.NAME_MAX} characters`,
+    )
+    .optional(),
   description: z
     .string()
     .min(1, "Description is required")
@@ -129,6 +138,15 @@ export type CreateAgentInput = z.infer<typeof createAgentSchema>;
 // ── Update agent (all fields optional) ──────────────────────────────── //
 
 export const updateAgentSchema = z.object({
+  /** Human label for the agent. Optional: agents predate it, and the
+   *  console falls back to the capability or the description. */
+  name: z
+    .string()
+    .max(
+      AGENT_LIMITS.NAME_MAX,
+      `Name must be at most ${AGENT_LIMITS.NAME_MAX} characters`,
+    )
+    .optional(),
   description: z
     .string()
     .min(1, "Description must not be empty")
